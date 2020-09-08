@@ -1089,8 +1089,11 @@ def closure_compiler(filename, pretty=True, advanced=True, extra_closure_args=No
     outfile = filename + '.cc.js'
     configuration.get_temp_files().note(outfile)
 
-    args = ['--compilation_level', 'ADVANCED_OPTIMIZATIONS' if advanced else 'SIMPLE_OPTIMIZATIONS',
-            '--language_in', 'ECMASCRIPT5']
+    args = ['--compilation_level', 'ADVANCED_OPTIMIZATIONS' if advanced else 'SIMPLE_OPTIMIZATIONS']
+    # Keep in sync with ecmaVersion in tools/acorn-optimizer.js
+    args += ['--language_in', 'ECMASCRIPT_2018']
+    args += ['--language_out', 'ECMASCRIPT5']
+
     for e in CLOSURE_EXTERNS:
       args += ['--externs', e]
     args += ['--js_output_file', outfile]
